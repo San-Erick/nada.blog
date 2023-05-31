@@ -1,12 +1,16 @@
+// Declare the uploadedComments array
+let uploadedComments = [];
+
 // Function to generate the comments section
-function generateCommentsSection(comments) {
+function generateCommentsSection() {
   const commentsSection = document.getElementById('comments-list');
   commentsSection.innerHTML = ''; // Clear the existing comments
 
   const commentsContent = document.createElement('div');
-  commentsContent.innerHTML = '<h2>Comentarios</h2>';
+  commentsContent.innerHTML = '<h2>Comentarios anteriores</h2>';
 
-  comments.forEach(comment => {
+  // Iterate over uploadedComments array instead of comments array
+  uploadedComments.forEach(comment => {
     const commentItem = document.createElement('div');
     commentItem.classList.add('comment');
 
@@ -51,18 +55,24 @@ function submitComment(event) {
     // Add the new comment to the comments array
     comments.push(comment);
 
+    // Add the new comment to the uploadedComments array
+    uploadedComments.push(comment);
+
     // Clear the form inputs
     nameInput.value = '';
     commentInput.value = '';
 
     // Regenerate the comments section to include the new comment
-    generateCommentsSection(comments);
+    generateCommentsSection();
   }
 }
 
 // Add event listener to the comment submission form
 const commentForm = document.querySelector('form');
-commentForm.addEventListener('submit', submitComment);
+commentForm.addEventListener('submit', event => {
+  submitComment(event);
+  generateCommentsSection();
+});
 
 // Fetch the JSON data
 fetch('data.json')
@@ -73,7 +83,7 @@ fetch('data.json')
     const resume = data.resume;
 
     generateCharacterSections(characters);
-    generateCommentsSection(comments);
+    generateCommentsSection();
     generateResumeSection(resume);
   })
   .catch(error => {
