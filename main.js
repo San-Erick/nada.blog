@@ -1,6 +1,18 @@
 // Declare the uploadedComments array
 let uploadedComments = [];
 
+// Function to generate the character sections
+function generateCharacterSections(characters) {
+  // Your existing code for generating character sections
+  // ...
+}
+
+// Function to generate the resume section
+function generateResumeSection(resume) {
+  // Your existing code for generating the resume section
+  // ...
+}
+
 // Function to generate the comments section
 function generateCommentsSection() {
   const commentsSection = document.getElementById('comments-list');
@@ -52,9 +64,6 @@ function submitComment(event) {
       comment: userComment
     };
 
-    // Add the new comment to the comments array
-    comments.push(comment);
-
     // Add the new comment to the uploadedComments array
     uploadedComments.push(comment);
 
@@ -74,18 +83,5 @@ commentForm.addEventListener('submit', event => {
   generateCommentsSection();
 });
 
-// Fetch the JSON data
-fetch('data.json')
-  .then(response => response.json())
-  .then(data => {
-    const characters = data.characters;
-    const comments = data.comments;
-    const resume = data.resume;
-
-    generateCharacterSections(characters);
-    generateCommentsSection();
-    generateResumeSection(resume);
-  })
-  .catch(error => {
-    console.log('An error occurred while fetching the JSON data:', error);
-  });
+// Call the initial generation of comments section
+generateCommentsSection();
